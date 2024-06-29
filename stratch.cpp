@@ -28,16 +28,17 @@ public:
     }
     void insert_rear(int data) {
         node* ptr = new node;
-        if(rear == NULL){
+        if (rear == NULL) {
             front = ptr;
-        }else{
+        }
+        else {
             ptr->previous = rear;
             rear->next = ptr;
         }
         size++;
         rear = ptr;
         rear->data = data;
-        
+
     }
     int remove_front() {
         node* ptr = front;
@@ -48,7 +49,7 @@ public:
         delete ptr;
         return 0;
     }
-    int remove_rear(){
+    int remove_rear() {
         node* ptr = rear;
         rear = ptr->previous;
         rear->next = NULL;
@@ -61,31 +62,27 @@ public:
         return size;
     }
     void make_empty() {
-        if(front.next == NULL){
-            for(int i = 0; i <= 0; i++){
-                node* ptr = front;
-                front = NULL;
-                rear = NULL;
-                delete ptr;
-            }
-        }else{
-            for(int i = 0; i <= 0; i++){
-                node* ptr = front;
-                front = ptr.next;
-                ptr.next = NULL;
-                front.previous = NULL;
-                delete ptr;
-            }
+        for (int i = 1; i <= size; i++) {
+            node* ptr = front;
+            front = front->next;
+            ptr->next = NULL;
+            delete ptr;
         }
+        front = NULL;
+        rear = NULL;
+        size = 0;
     }
     void display() {
-        std::cout << "front: " << front->data << "\n";
-        std::cout << "rear: " << rear->data << "\n";
+        if (front == NULL) {
+            std::cout << "list empty" << "\n";
+        }
+        else {
+            std::cout << "front: " << front->data << "\n";
+            std::cout << "rear: " << rear->data << "\n";
+        }
+        
     }
 };
-
-
-
 
 
 int main()
@@ -97,13 +94,14 @@ int main()
     list1.insert_rear(20);
     list1.insert_rear(10);
     list1.insert_front(50);
-    
-    list.make_empty();
-    
-    list1.remove_rear();
+
+    list1.make_empty();
+
+    list1.insert_rear(10);
+    list1.insert_front(20);
+    list1.insert_rear(0);
     list1.remove_front();
 
-    
     list1.display();
     std::cout << "The size of list: " << list1.list_size();
 }
