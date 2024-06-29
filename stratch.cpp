@@ -27,6 +27,16 @@ public:
         ptr->data = data;
     }
     void insert_rear(int data) {
+        node* ptr = new node;
+        if(rear == NULL){
+            front = ptr;
+        }else{
+            ptr->previous = rear;
+            rear->next = ptr;
+        }
+        size++;
+        rear = ptr;
+        rear->data = data;
         
     }
     int remove_front() {
@@ -39,13 +49,34 @@ public:
         return 0;
     }
     int remove_rear(){
+        node* ptr = rear;
+        rear = ptr->previous;
+        rear->next = NULL;
+        ptr->previous = NULL;
+        size--;
+        delete ptr;
         return 0;
     }
     int list_size() {
         return size;
     }
     void make_empty() {
-
+        if(front.next == NULL){
+            for(int i = 0; i <= 0; i++){
+                node* ptr = front;
+                front = NULL;
+                rear = NULL;
+                delete ptr;
+            }
+        }else{
+            for(int i = 0; i <= 0; i++){
+                node* ptr = front;
+                front = ptr.next;
+                ptr.next = NULL;
+                front.previous = NULL;
+                delete ptr;
+            }
+        }
     }
     void display() {
         std::cout << "front: " << front->data << "\n";
@@ -61,11 +92,18 @@ int main()
 {
     doublelinklist list1;
 
-    list1.insert_front(20);
     list1.insert_front(30);
     list1.insert_front(40);
+    list1.insert_rear(20);
+    list1.insert_rear(10);
     list1.insert_front(50);
+    
+    list.make_empty();
+    
+    list1.remove_rear();
     list1.remove_front();
+
+    
     list1.display();
     std::cout << "The size of list: " << list1.list_size();
 }
