@@ -1,131 +1,137 @@
 #include <iostream>
-
+using namespace std;
 struct node {
-    int data;
-    node* next = NULL;
-    node* previous = NULL;
+ int data;
+ node* next = NULL;
+ node* previous = NULL;
 };
-
 class doublelinklist {
 private:
-    node* front = NULL;
-    node* rear = NULL;
-    int size = 0;
+ node* front = NULL;
+ node* rear = NULL;
+ int size = 0;
 public:
-    void insert_front(int data) {
-        node* ptr = new node;
-
-        if (front == NULL) {
-            rear = ptr;
-        }
-        else {
-            ptr->next = front;
-            front->previous = ptr;
-        }
-        size++;
-        front = ptr;
-        front->data = data;
-        front->previous = NULL;
-    }
-    void insert_rear(int data) {
-        node* ptr = new node;
-        if (rear == NULL) {
-            front = ptr;
-        }
-        else {
-            ptr->previous = rear;
-            rear->next = ptr;
-        }
-        size++;
-        rear = ptr;
-        rear->data = data;
-        rear->next = NULL;
-
-    }
-    int remove_front() {
-        if (front == NULL) {
-            return 0;
-        }
-        else {
-            node* ptr = front;
-            front = front->next;
-            ptr->next = NULL;
-            front->previous = NULL;
-            size--;
-            delete ptr;
-            return 0;
-        }
-    }
-    int remove_rear() {
-        if (rear == NULL) {
-            return 0;
-        }
-        else {
-            node* ptr = rear;
-            rear = ptr->previous;
-            rear->next = NULL;
-            ptr->previous = NULL;
-            size--;
-            delete ptr;
-            return 0;
-        }
-    }
-    int list_size() {
-        return size;
-    }
-    void make_empty() {
-        for (int i = 1; i <= size; i++) {
-            node* ptr = front;
-            front = front->next;
-            ptr->next = NULL;
-            delete ptr;
-        }
-        front = NULL;
-        rear = NULL;
-        size = 0;
-    }
-    void display() {
-        if (front == NULL) {
-            std::cout << "list empty" << "\n";
-        }
-        else {
-            while (front != NULL) {
-                std::cout << front->data << "\n";
-                front = front->next;
-            }
-        }
-
-    }
+ void insert_front(int data) {
+ node* ptr = new node;
+ if (front == NULL) {
+ rear = ptr;
+ }
+ else {
+ ptr->next = front;
+ front->previous = ptr;
+ }
+ size++;
+ front = ptr;
+ front->data = data;
+ }
+ void insert_rear(int data) {
+ node* ptr = new node;
+ if (rear == NULL) {
+ front = ptr;
+ }
+ else {
+ ptr->previous = rear;
+ rear->next = ptr;
+ }
+ size++;
+ rear = ptr;
+ rear->data = data;
+ }
+ int remove_front() {
+ if (front == NULL) {
+ return 0;
+ }
+ else {
+ node* ptr = front;
+ if(front == rear){
+ front = NULL;
+ rear = NULL;
+ }else{
+ front = front->next;
+ ptr->next = NULL;
+ front->previous = NULL;
+ }
+ ptr = NULL;
+ size--;
+ delete ptr;
+ return 0;
+ }
+ }
+ int remove_rear() {
+ if (rear == NULL) {
+ return 0;
+ }
+ else {
+ node* ptr = rear;
+ if(rear == front){
+ rear = NULL;
+ front = NULL;
+ }else{
+ rear = rear->previous;
+ rear->next = NULL;
+ ptr->previous = NULL;
+ }
+ ptr = NULL;
+ size--;
+ delete ptr;
+ return 0;
+ }
+ }
+ int list_size() {
+ return size;
+ }
+ void make_empty() {
+ for (int i = 1; i <= size; i++) {
+ node* ptr = front;
+ front = front->next;
+ ptr->next = NULL;
+ delete ptr;
+ }
+ front = NULL;
+ rear = NULL;
+ size = 0;
+ }
+ void display() {
+ node* ptr = front;
+ if (front == NULL) {
+ std::cout << "list empty" << "\n";
+ }
+ else {
+ while (ptr != NULL) {
+ std::cout << ptr->data << "\n";
+ ptr = ptr->next;
+ }
+ }
+ }
 };
-
-
 int main()
 {
-    doublelinklist list1;
-
-    list1.insert_front(30);
-    list1.insert_front(40);
-    list1.insert_rear(20);
-    list1.insert_rear(10);
-    list1.insert_front(50);
-
-    list1.make_empty();
-    list1.remove_front();
-    list1.remove_rear();
-
-
-    list1.insert_rear(10);
-    list1.insert_front(20);
-    list1.remove_front();
-    list1.insert_front(20);
-    list1.insert_front(30);
-
-    for (int i = 9; i >= 0; i--) {
-        list1.insert_rear(i);
-    }
-
-    list1.display();
-    std::cout << "The size of list: " << list1.list_size();
+ doublelinklist list1;
+ cout << "Inserting in the front when empty \n";
+ list1.insert_front(30);
+ list1.display();
+ cout << "removing data making the list empty with rear\n";
+ list1.remove_rear();
+ list1.display();
+ cout << "removing when list is empty with front \n";
+ list1.remove_front();
+ list1.display();
+ cout << "Emptying list when empty \n";
+ list1.make_empty();
+ list1.display();
+ cout << "inserting with loop and rear when empty \n";
+ for (int i = 9; i >= 1; i--) {
+ list1.insert_rear(i);
+ }
+ list1.display();
+ cout << "Removing from ending of list \n";
+ list1.remove_rear();
+ list1.display();
+ cout << "Removing from front of list \n";
+ list1.remove_front();
+ list1.display();
+ cout << "displaying size of list \n";
+ std::cout << "The size of list: " << list1.list_size();
 }
 
 
